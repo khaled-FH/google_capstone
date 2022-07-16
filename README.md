@@ -25,7 +25,7 @@ rides_202204	13	371,249
 rides_202205	13	634,858
 ---
 ---
-Total Number of Rows	5,860,776
+Total Number of Rows: 5,860,776
 ---
 
 # Data Eploration
