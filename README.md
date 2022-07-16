@@ -17,7 +17,7 @@ First step after uploading the data to the data set is to confirm if the tables 
 <img src="01-table_schema.png" alt="table_schema"/>
 
 Then I decided to combine all tables in one as per the below code
-```{sql connection=}
+```json
 CREATE TABLE rides_details.combined_data AS (SELECT * 
 FROM rides_details.rides_202106 
 UNION ALL
@@ -58,8 +58,8 @@ FROM rides_details.rides_202205)
 The query generated the table and I confirmed that the number of rows in this table equal to the sum of all rows mentioned above in the data summary section and as per below image:
 <img src="02-combined_table.png" alt="combined_table"/>
 # Cleaning Process
-1- Check duplicates “ride_id” the primary key
-```{sql connection=}
+• Check duplicates “ride_id” the primary key
+```json
 SELECT 
  DISTINCT(ride_id)
 FROM `cyclistic-bike-share-0001.rides_details.combined_data`
