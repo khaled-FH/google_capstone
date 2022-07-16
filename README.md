@@ -53,11 +53,12 @@ FROM rides_details.rides_202204
 UNION ALL
 SELECT * 
 FROM rides_details.rides_202205)
-
 ```
 The query generated the table and I confirmed that the number of rows in this table equal to the sum of all rows mentioned above in the data summary section and as per below image:
 <img src="02-combined_table.png" alt="combined_table"/>
-# Cleaning Process
+
+# Processing Data
+
 1- Check duplicates “ride_id” the primary key
 ```sql
 SELECT 
@@ -204,6 +205,35 @@ SELECT
  member_casual
 FROM `cyclistic-bike-share-0001.rides_details.combined_data`
 WHERE member_casual IS NULL 
+```
+No Null found in “member_casual”.
+
+10- Create “analysis_table” to perform data analysis process using it
 ```sql
-  No Null found in “member_casual”. 
+CREATE TABLE rides_details.analysis_table AS
+(SELECT
+  ride_id,
+  rideable_type,
+  member_casual,
+  DATE(started_at) AS start_date,
+  DATE(ended_at) AS end_date,
+  ROUND(TIMESTAMP_DIFF(ended_at, started_at, SECOND) / 60, 2) AS ride_Length_minutes,
+  CASE
+    WHEN EXTRACT(DAYOFWEEK FROM started_at) = 1 THEN "Sunday"
+    WHEN EXTRACT(DAYOFWEEK FROM started_at) = 2 THEN "Monday"
+    WHEN EXTRACT(DAYOFWEEK FROM started_at) = 3 THEN "Tuseday"
+    WHEN EXTRACT(DAYOFWEEK FROM started_at) = 4 THEN "Wednesday"
+    WHEN EXTRACT(DAYOFWEEK FROM started_at) = 5 THEN "Thursday"
+    WHEN EXTRACT(DAYOFWEEK FROM started_at) = 6 THEN "Friday"
+    WHEN EXTRACT(DAYOFWEEK FROM started_at) = 7 THEN "Saturday"
+    ELSE "NULL" 
+    END AS day_of_week,
+    start_station_name,
+    end_station_name
+FROM rides_details.combined_data)
+```
+The ending result of the processing phase is that we have now table contains cleaned data with only the required columns to perform the analysis from my prespective.
+![03-analysis_table](https://user-images.githubusercontent.com/83392117/179369444-cfd5e6ec-4a86-4b2f-8c21-e38600b1464b.png)
+
+# Analysis process
 
