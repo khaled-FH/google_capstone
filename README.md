@@ -442,4 +442,4 @@ to confirm that the below dashboard created in Tableau is correct :
 
 ![05-Top 10 Stations Dashboard](https://user-images.githubusercontent.com/83392117/179391169-bb920ffd-aaf0-4f0b-b18b-445e7fb0e6f7.jpg)
 
-Then I wrapped my analysis and conclusion to this presentation whic you can download it by [clicking here](https://downgit.github.io/#/home?url=https://github.com/khaled-FH/google_capstone/blob/main/Cyclistic%20Riders%E2%80%99%20Behavior%20Analysis.pptx) to answer How do annual members and casual riders use Cyclistic bikes differently?
+Then I wrapped my analysis and conclusion to this presentation which you can download it by [clicking here](https://downgit.github.io/#/home?url=https://github.com/khaled-FH/google_capstone/blob/main/Cyclistic%20Riders%E2%80%99%20Behavior%20Analysis.pptx) to answer How do annual members and casual riders use Cyclistic bikes differently?
