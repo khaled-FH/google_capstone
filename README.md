@@ -1,6 +1,6 @@
-# title: Google Capstone - Cyclistic bike share
-# author: Khaled Faisal
-# date: 2022-07-16
+# Title: Google Capstone - Cyclistic bike share
+# Author: Khaled Faisal
+# Date: 2022-07-16
 
 
 ## Project Summary
@@ -380,3 +380,58 @@ ORDER BY casual_rides DESC
 Related VIZ
 ![02-Monthly Rides Per Rider Category](https://user-images.githubusercontent.com/83392117/179390250-a60148c9-0870-48e7-9fbe-b93d92febeef.jpg)
 
+7- Calculate how many rides done for each weekday arranged from the day with most rides to the least
+```sql
+SELECT
+  day_of_week,
+  COUNT(day_of_week) AS no_of_rides,
+  COUNT(CASE WHEN member_casual = "casual" THEN 1 END) AS casual_rides,
+  COUNT(CASE WHEN member_casual = "member" THEN 1 END) AS member_rides
+FROM rides_details.analysis_table 
+WHERE ride_length_minutes > 0
+GROUP BY day_of_week
+ORDER BY no_of_rides DESC
+```
+![12-rides_by_weekday](https://user-images.githubusercontent.com/83392117/179390546-3ab57043-1cd2-4494-b985-e364ed27bddd.png)
+Related VIZ
+![03-Days With Most Rides During the Past Year](https://user-images.githubusercontent.com/83392117/179390557-84450172-223a-4744-8fc0-ccc17f07cd3c.jpg)
+
+In BigQuery we can adjust the above query to arrange it by "casual_rides" or by "member_rides" to confirm the VIZ created in tableau.
+
+8- Frequently used start stations by casual riders limited to 10 stations
+```sql
+SELECT
+  start_station_name,
+  COUNT(start_station_name) AS no_of_rides_started,
+  COUNT(CASE WHEN member_casual = "casual" THEN 1 END) AS casual_rides,
+  COUNT(CASE WHEN member_casual = "member" THEN 1 END) AS member_rides
+FROM rides_details.analysis_table
+WHERE ride_length_minutes > 0
+AND start_station_name IS NOT NULL
+Group BY start_station_name
+ORDER BY casual_rides DESC
+LIMIT 10
+```
+![13-Start_Casual](https://user-images.githubusercontent.com/83392117/179390782-4d381f0b-11c3-4bd9-9529-a0d3a5e4fe09.png)
+
+9- Frequently used end stations by casual riders limited to 10 stations
+```sql
+SELECT
+  end_station_name,
+  COUNT(end_station_name) AS no_of_rides_ended,
+  COUNT(CASE WHEN member_casual = "casual" THEN 1 END) AS casual_rides,
+  COUNT(CASE WHEN member_casual = "member" THEN 1 END) AS member_rides
+FROM rides_details.analysis_table
+WHERE ride_length_minutes > 0
+AND end_station_name IS NOT NULL
+Group BY end_station_name
+ORDER BY casual_rides DESC
+LIMIT 10
+```
+Related VIZ
+![14-End_Casual](https://user-images.githubusercontent.com/83392117/179391147-ef3afae6-8fbf-4531-8222-2977528f0a51.png)
+
+10- I repeated the same queries mentioned in STEP (8) and Step (9) but I changer the ```sql ORDER BY ``` statement to make it ```sql ORDER BY member_rides DESC ```
+to confirm that the below dashboard created in Tableau is correct :
+
+![05-Top 10 Stations Dashboard](https://user-images.githubusercontent.com/83392117/179391169-bb920ffd-aaf0-4f0b-b18b-445e7fb0e6f7.jpg)
