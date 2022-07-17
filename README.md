@@ -361,7 +361,9 @@ WHERE ride_length_minutes > 0
 GROUP BY season
 ```
 ![10-rides_by_season](https://user-images.githubusercontent.com/83392117/179389890-c954bc37-4ed1-4a6a-a539-aa83615254fd.png)
+
 Related VIZ
+
 ![01-Rides per Season](https://user-images.githubusercontent.com/83392117/179389918-c0c09f9b-af99-4f9e-92d9-3003c70a49aa.jpg)
 
 6- Calculate how many rides done per month arranged from the month with the most rides to the least
@@ -377,7 +379,9 @@ GROUP BY month
 ORDER BY casual_rides DESC
 ```
 ![11-rides_by_month](https://user-images.githubusercontent.com/83392117/179390239-c132671d-f4ca-4d13-bc6b-e24b03aec1a8.png)
+
 Related VIZ
+
 ![02-Monthly Rides Per Rider Category](https://user-images.githubusercontent.com/83392117/179390250-a60148c9-0870-48e7-9fbe-b93d92febeef.jpg)
 
 7- Calculate how many rides done for each weekday arranged from the day with most rides to the least
@@ -393,7 +397,9 @@ GROUP BY day_of_week
 ORDER BY no_of_rides DESC
 ```
 ![12-rides_by_weekday](https://user-images.githubusercontent.com/83392117/179390546-3ab57043-1cd2-4494-b985-e364ed27bddd.png)
+
 Related VIZ
+
 ![03-Days With Most Rides During the Past Year](https://user-images.githubusercontent.com/83392117/179390557-84450172-223a-4744-8fc0-ccc17f07cd3c.jpg)
 
 In BigQuery we can adjust the above query to arrange it by "casual_rides" or by "member_rides" to confirm the VIZ created in tableau.
@@ -428,10 +434,11 @@ Group BY end_station_name
 ORDER BY casual_rides DESC
 LIMIT 10
 ```
-Related VIZ
 ![14-End_Casual](https://user-images.githubusercontent.com/83392117/179391147-ef3afae6-8fbf-4531-8222-2977528f0a51.png)
 
 10- I repeated the same queries mentioned in STEP (8) and Step (9) but I changer the ```sql ORDER BY ``` statement to make it ```sql ORDER BY member_rides DESC ```
 to confirm that the below dashboard created in Tableau is correct :
 
 ![05-Top 10 Stations Dashboard](https://user-images.githubusercontent.com/83392117/179391169-bb920ffd-aaf0-4f0b-b18b-445e7fb0e6f7.jpg)
+
+Then I wrapped my analysis and conclusion to this presentation whic you can download it by [clicking here]
