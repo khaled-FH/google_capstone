@@ -246,7 +246,8 @@ Where ride_Length_minutes <= 0
 ORDER BY ride_Length_minutes
 ```
 ![04-negative_length](https://user-images.githubusercontent.com/83392117/179387694-e6f85f8f-3bfe-4b7c-bcb5-d32035651ac8.png)
-  Check the rides lenght in hours and negative length in hours
+ 
+ Check the rideslengtht in hours and negative length in hours
 ```sql
 SELECT
   COUNT(ride_id) AS total_rides,
@@ -260,7 +261,7 @@ FROM rides_details.analysis_table
 ```
 ![06-rides_hours](https://user-images.githubusercontent.com/83392117/179388368-f7cfbae2-a807-4daa-b1a1-806fa7f00efa.png)
 
-AS shown the first query returns 646 rows with negative values and the second returns length of -37.98 hours which represents minimal percentage but I decided to use a filter in the queries related to the analysis phase to remove the negative and zero values as will be demonstrated below.
+AS shown the first query returns 646 rows with negative values and the second one returns a length of -37.98 hours which represents a minimal percentage but I decided to use a filter in the queries related to the analysis phase to remove the negative and zero values as will be demonstrated below.
 
 # Analysis Queries
 
@@ -276,7 +277,59 @@ WHERE ride_length_minutes > 0
 ```
 ![05-all_rides](https://user-images.githubusercontent.com/83392117/179387932-76aee3ca-c0a8-4e36-ac0a-6e74350a5600.png)
 
-2- Count by customer type the number of all rides to be analyzed with average length, maximum length, and minimum length
+2- Count by customer type the number of rides with average length, maximum length, and minimum length
+```sql
+SELECT 
+  member_casual,
+  COUNT(CASE WHEN member_casual = "casual" THEN 1 END) AS casual_rides,
+  COUNT(CASE WHEN member_casual = "member" THEN 1 END) AS member_rides,
+  COUNT(ride_id) AS no_of_rides,
+  ROUND(AVG(ride_length_minutes),2) AS avg_ride_length_minutes,
+  MAX(ride_length_minutes) AS maximum_ride_lenght_minutes,
+  MIN(ride_length_minutes) AS minimum_ride_lenght_minutes
+FROM rides_details.analysis_table
+WHERE ride_length_minutes > 0
+GROUP BY member_casual
+```
+![07-member_casual](https://user-images.githubusercontent.com/83392117/179389147-9e15eb83-9917-4eaa-9729-529800a77fd3.png)
+
+3- Check rides done by which rideable type for each customer category
+```sql
+SELECT
+  rideable_type,
+  COUNT(CASE WHEN member_casual = "casual" THEN 1 END) AS casual_rides,
+  ROUND(COUNT(CASE WHEN member_casual = "casual" THEN 1 END) / Count(ride_id) * 100,2) AS casual_percent,
+  COUNT(CASE WHEN member_casual = "member" THEN 1 END) AS member_rides,
+  ROUND(COUNT(CASE WHEN member_casual = "member" THEN 1 END) / Count(ride_id) * 100,2) AS member_percent,
+  Count(ride_id) AS total_rides
+FROM rides_details.analysis_table
+WHERE ride_Length_minutes > 0
+GROUP BY rideable_type
+ORDER BY casual_rides DESC
+```
+![08-rideable_type](https://user-images.githubusercontent.com/83392117/179389333-498457de-5432-4dbd-a625-15ae9b8e29ce.png)
+
+4- Check if the docked bike type is moving bike
+```sql
+SELECT
+  ride_Length_minutes,
+  start_station_name,
+  end_station_name
+FROM rides_details.analysis_table
+WHERE rideable_type = "docked_bike"
+AND start_station_name != end_station_name
+AND ride_Length_minutes > 0
+ORDER BY ride_Length_minutes
+```
+![09-docked_bike](https://user-images.githubusercontent.com/83392117/179389456-5d2f0ca3-9e05-4007-8edd-966b5e3ec26b.png)
+
+Confirmed as moving bikes.
+
+The VIZ for this query done by Tableau and it will be used in the final presentation
+
+![04-Rideable Type](https://user-images.githubusercontent.com/83392117/179389695-ba5c5d08-9e1a-40ba-99ae-e3fae9531445.jpg)
+
+5- Calculate how many rides done per season
 ```sql
 
 
