@@ -9,10 +9,12 @@ Data related to the project has been made available by Motivate International In
 Project ultimate goal is to design marketing strategies aimed at converting casual riders into annual members, so business question assigned to me to answer is : How do annual members and casual riders use Cyclistic bikes differently?
 # Project's data Summary
 Data available in separate monthly ZIP format files to download and after extracting the files we get CSV format files, and the summary is as shown below:
+
 <img src="00-data_summary.png" alt="data_summary"/>
-# Data Eploration
+
+# Data Exploration
 When opening the data using Microsoft Excel, I noticed that the program is spending much time to open the file so I decided to start the project using Google BigQuery.
-First step after uploading the data to the data set is to confirm if the tables contains the same number of columns in the same order with the same schema which is confirmed  and all tables contain the same structure as per the below screenshot for one of the tables schema
+First step after uploading the data to the data set is to confirm if the tables contains the same number of columns in the same order with the same schema which is confirmed and all tables contain the same structure as per the below screenshot for one of the tables schema
 
 <img src="01-table_schema.png" alt="table_schema"/>
 
@@ -55,6 +57,7 @@ SELECT *
 FROM rides_details.rides_202205)
 ```
 The query generated the table and I confirmed that the number of rows in this table equal to the sum of all rows mentioned above in the data summary section and as per below image:
+
 <img src="02-combined_table.png" alt="combined_table"/>
 
 # Processing Data
@@ -76,6 +79,7 @@ FROM `cyclistic-bike-share-0001.rides_details.combined_data`
 WHERE started_at IS NULL
 ```  
  No Null found in “started_at”
+ 
 ```sql
 SELECT 
  ended_at
@@ -168,6 +172,7 @@ FROM `cyclistic-bike-share-0001.rides_details.combined_data`
 WHERE end_station_name IS NULL
 ```
  Returns 878338 Rows
+ 
 ```sql
 SELECT 
  ride_id,
@@ -177,6 +182,7 @@ FROM `cyclistic-bike-share-0001.rides_details.combined_data`
 WHERE end_station_id IS NULL
 ```
  Returns 878338 Rows
+ 
 ```sql
 SELECT 
  ride_id,
@@ -187,6 +193,7 @@ WHERE end_station_id IS NULL
 AND end_station_id IS NULL
 ```
  Returns 878338 Rows
+ 
 ```sql
 SELECT 
  ride_id,
@@ -325,12 +332,51 @@ ORDER BY ride_Length_minutes
 
 Confirmed as moving bikes.
 
-The VIZ for this query done by Tableau and it will be used in the final presentation
+The VIZ for this query created in Tableau and it will be used in the final presentation
 
 ![04-Rideable Type](https://user-images.githubusercontent.com/83392117/179389695-ba5c5d08-9e1a-40ba-99ae-e3fae9531445.jpg)
 
-5- Calculate how many rides done per season
+5- Calculate how many rides done per season arranged from  season with most rides to the least
 ```sql
-
-
+SELECT
+  CASE
+    WHEN EXTRACT(MONTH FROM start_date) = 06 THEN "summer"
+    WHEN EXTRACT(MONTH FROM start_date) = 07 THEN "summer"
+    WHEN EXTRACT(MONTH FROM start_date) = 08 THEN "summer"
+    WHEN EXTRACT(MONTH FROM start_date) = 09 THEN "autumn"
+    WHEN EXTRACT(MONTH FROM start_date) = 10 THEN "autumn"
+    WHEN EXTRACT(MONTH FROM start_date) = 11 THEN "autumn"
+    WHEN EXTRACT(MONTH FROM start_date) = 12 THEN "winter"
+    WHEN EXTRACT(MONTH FROM start_date) = 01 THEN "winter"
+    WHEN EXTRACT(MONTH FROM start_date) = 02 THEN "winter"
+    WHEN EXTRACT(MONTH FROM start_date) = 03 THEN "spring"
+    WHEN EXTRACT(MONTH FROM start_date) = 04 THEN "spring"
+    WHEN EXTRACT(MONTH FROM start_date) = 05 THEN "spring"
+    END AS season,
+    COUNT(CASE WHEN member_casual = "casual" THEN 1 END) AS casual_rides,
+    COUNT(CASE WHEN member_casual = "member" THEN 1 END) AS member_rides,
+    COUNT(ride_id) AS total_rides 
+FROM rides_details.analysis_table 
+WHERE ride_length_minutes > 0
+GROUP BY season
 ```
+![10-rides_by_season](https://user-images.githubusercontent.com/83392117/179389890-c954bc37-4ed1-4a6a-a539-aa83615254fd.png)
+Related VIZ
+![01-Rides per Season](https://user-images.githubusercontent.com/83392117/179389918-c0c09f9b-af99-4f9e-92d9-3003c70a49aa.jpg)
+
+6- Calculate how many rides done per month arranged from the month with the most rides to the least
+```sql
+SELECT
+  EXTRACT(MONTH FROM start_date) AS month,
+  COUNT(CASE WHEN member_casual = "casual" THEN 1 END) AS casual_rides,
+  COUNT(CASE WHEN member_casual = "member" THEN 1 END) AS member_rides,
+  Count(ride_id) AS total_rides
+FROM rides_details.analysis_table
+WHERE ride_Length_minutes > 0
+GROUP BY month
+ORDER BY casual_rides DESC
+```
+![11-rides_by_month](https://user-images.githubusercontent.com/83392117/179390239-c132671d-f4ca-4d13-bc6b-e24b03aec1a8.png)
+Related VIZ
+![02-Monthly Rides Per Rider Category](https://user-images.githubusercontent.com/83392117/179390250-a60148c9-0870-48e7-9fbe-b93d92febeef.jpg)
+
