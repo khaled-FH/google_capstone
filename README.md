@@ -4,18 +4,18 @@
 
 
 ## Project Summary
-This is capstone for Google data analytics certificate.
+This is a capstone for the Google data analytics certificate.
 Data related to the project has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
-Project ultimate goal is to design marketing strategies for Cyclistic bike share company aimed at converting casual riders into annual members, and business question assigned to me is : How do annual members and casual riders use Cyclistic bikes differently?
+The project's ultimate goal is to design marketing strategies for Cyclistic bike share company aimed at converting casual riders into annual members, and the business question assigned to me is: How do annual members and casual riders use Cyclistic bikes differently?
 Project's Stake holders are Lily Moreno the director of marketing, Cyclistic executive team, and Cyclistic marketing analytics team, for the first two stakeholders I created a presentation can be downloaded from [here](https://downgit.github.io/#/home?url=https://github.com/khaled-FH/google_capstone/blob/main/Cyclistic%20Riders%E2%80%99%20Behavior%20Analysis.pptx) to answer the assigned question, and for the last stakeholder I kept a log of my work and saved queries and VIZ work in BigQuery and Tableau respectively.
 # Project's data Summary
-Data available in separate monthly ZIP format files to download and after extracting the files we get CSV format files, and the summary is as shown below:
+Data is available in separate monthly ZIP format files to download and after extracting the files we get CSV format files, and the summary is as shown below:
 
 <img src="00-data_summary.png" alt="data_summary"/>
 
 # Data Exploration
-When opening the data using Microsoft Excel, I noticed that the program is spending much time to open the file so I decided to start the project using Google BigQuery.
-First step after uploading the data to the data set is to confirm if the tables contains the same number of columns in the same order with the same schema which is confirmed and all tables contain the same structure as per the below screenshot for one of the tables schema
+When opening the data using Microsoft Excel, I noticed that the program is spending a lot of time opening the files so I decided to start the project using Google BigQuery since the data is large.
+The first step after uploading the data to the data set is to confirm if the tables contain the same number of columns in the same order with the same schema which is confirmed that all tables contain the same structure as per the below screenshot for one of the table's schema
 
 <img src="01-table_schema.png" alt="table_schema"/>
 
