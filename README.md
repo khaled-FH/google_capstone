@@ -7,6 +7,7 @@
 This is capstone for Google data analytics certificate.
 Data related to the project has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
 Project ultimate goal is to design marketing strategies for Cyclistic bike share company aimed at converting casual riders into annual members, and business question assigned to me is : How do annual members and casual riders use Cyclistic bikes differently?
+Project's Stake holders are Lily Moreno the director of marketing, Cyclistic executive team, and Cyclistic marketing analytics team, for the first two stakeholders I created a presentation can be downloaded from [here](https://downgit.github.io/#/home?url=https://github.com/khaled-FH/google_capstone/blob/main/Cyclistic%20Riders%E2%80%99%20Behavior%20Analysis.pptx) to answer the assigned question, and for the last stakeholder I kept a log of my work and saved queries and VIZ work in BigQuery and Tableau respectively.
 # Project's data Summary
 Data available in separate monthly ZIP format files to download and after extracting the files we get CSV format files, and the summary is as shown below:
 
@@ -441,4 +442,4 @@ to confirm that the below dashboard created in Tableau is correct :
 
 ![05-Top 10 Stations Dashboard](https://user-images.githubusercontent.com/83392117/179391169-bb920ffd-aaf0-4f0b-b18b-445e7fb0e6f7.jpg)
 
-Then I wrapped my analysis and conclusion to this presentation whic you can download it by [clicking here](https://downgit.github.io/#/home?url=https://github.com/khaled-FH/google_capstone/blob/main/Cyclistic%20Riders%E2%80%99%20Behavior%20Analysis.pptx)
+Then I wrapped my analysis and conclusion to this presentation whic you can download it by [clicking here](https://downgit.github.io/#/home?url=https://github.com/khaled-FH/google_capstone/blob/main/Cyclistic%20Riders%E2%80%99%20Behavior%20Analysis.pptx) to answer How do annual members and casual riders use Cyclistic bikes differently?
