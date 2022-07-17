@@ -232,8 +232,52 @@ CREATE TABLE rides_details.analysis_table AS
     end_station_name
 FROM rides_details.combined_data)
 ```
-The ending result of the processing phase is that we have now table contains cleaned data with only the required columns to perform the analysis from my prespective.
+The ending result of the processing phase is that we have now a table contains cleaned data with only the required columns to perform the analysis from my perspective.
 ![03-analysis_table](https://user-images.githubusercontent.com/83392117/179369444-cfd5e6ec-4a86-4b2f-8c21-e38600b1464b.png)
 
-# Analysis process
+11- Check if "ride_length_minutes" column contains zero and negative values
+```sql
+SELECT
+  ride_length_minutes,
+  start_date,
+  end_date
+FROM rides_details.analysis_table
+Where ride_Length_minutes <= 0
+ORDER BY ride_Length_minutes
+```
+![04-negative_length](https://user-images.githubusercontent.com/83392117/179387694-e6f85f8f-3bfe-4b7c-bcb5-d32035651ac8.png)
+  Check the rides lenght in hours and negative length in hours
+```sql
+SELECT
+  COUNT(ride_id) AS total_rides,
+  ROUND(SUM(ride_Length_minutes) / 60,2) AS rides_lenght_hours,
+  (SELECT
+    ROUND(SUM(ride_length_minutes) / 60,2)
+    FROM rides_details.analysis_table
+    WHERE ride_length_minutes < 0) AS negative_length
+FROM rides_details.analysis_table 
 
+```
+![06-rides_hours](https://user-images.githubusercontent.com/83392117/179388368-f7cfbae2-a807-4daa-b1a1-806fa7f00efa.png)
+
+AS shown the first query returns 646 rows with negative values and the second returns length of -37.98 hours which represents minimal percentage but I decided to use a filter in the queries related to the analysis phase to remove the negative and zero values as will be demonstrated below.
+
+# Analysis Queries
+
+1- Count the number of all rides to be analyzed with average length, maximum length, and minimum length.
+```sql
+SELECT 
+  COUNT(ride_id) AS no_of_rides,
+  ROUND(AVG(ride_length_minutes),2) AS avg_ride_length_minutes,
+  MAX(ride_length_minutes) AS maximum_ride_lenght_minutes,
+  MIN(ride_length_minutes) AS minimum_ride_lenght_minutes
+FROM rides_details.analysis_table
+WHERE ride_length_minutes > 0
+```
+![05-all_rides](https://user-images.githubusercontent.com/83392117/179387932-76aee3ca-c0a8-4e36-ac0a-6e74350a5600.png)
+
+2- Count by customer type the number of all rides to be analyzed with average length, maximum length, and minimum length
+```sql
+
+
+```
